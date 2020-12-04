@@ -27,6 +27,24 @@ window.addEventListener('DOMContentLoaded', () => {
   //column is full when first num in square id (row) is occupied(true?)
   //run a function for each click
 
+  function checkColumn(e){
+    // compare column-digit (2nd digit) against (event.target.id last digit)
+    // if e.target.id[id.length-1]
+    //row fixed at 0
+    const squares = document.querySelectorAll('.token-square');
+    squares.forEach((el, i)=> {
+      if (el.id.includes('square-0')){
+        console.log('1');
+        if (e.target.id[e.target.id.length-1] === el.id[el.id.length-1]){
+          console.log('2');
+          if (squares[i].childElementCount !== 0){
+            console.log('3');
+          e.target.className += ' full';
+          }
+        }
+      }
+    });
+  }
 
 
 
@@ -43,6 +61,7 @@ window.addEventListener('DOMContentLoaded', () => {
       } else {
         target.className = 'black';
       }
+      checkColumn(e);
     })
 
   }
