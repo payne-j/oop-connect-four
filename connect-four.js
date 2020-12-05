@@ -19,15 +19,38 @@ window.addEventListener('DOMContentLoaded', () => {
   //check in group of square div cols (i.e -0's ) -
   //squares = queryselectorall('token-square') - gives node list - of all squares
   //filter last num of square id against last num in event target id
+  function placeToken(e) {
+    const target = document.getElementById('click-targets');
+    const color = target.className;
+    const div = document.createElement('div');
+    div.className = `token ${color}`;
+    //last digit in e target id = col
+    //iterate through rows - find lowest available row in col
+    const squares = document.querySelectorAll('.token-square');
+    const newArr = [];
+    squares.forEach((el, i)=> {
+      if (el.id[7] === e.target.id[e.target.id.length - 1]) {
+        newArr.push(el);
+      }
+    });
 
-
+    newArr.forEach(((el, i) => {
+      if (el.childElementCount === 1) {
+        let target = newArr[i-1];
+        target.appendChild(div);
+      } else if (i === 7) {
+        let target = newArr[i];
+        target.appendChild(div);
+      }
+    }))
+  }
 
 
   // checkColumn() - checking to see if col is full - if so changing click target to full
   //column is full when first num in square id (row) is occupied(true?)
   //run a function for each click
 
-  function checkColumn(e){
+  function checkColumn(e) {
     // compare column-digit (2nd digit) against (event.target.id last digit)
     // if e.target.id[id.length-1]
     //row fixed at 0
@@ -35,11 +58,11 @@ window.addEventListener('DOMContentLoaded', () => {
     squares.forEach((el, i)=> {
       if (el.id.includes('square-0')){
         console.log('1');
-        if (e.target.id[e.target.id.length-1] === el.id[el.id.length-1]){
+        if (e.target.id[e.target.id.length-1] === el.id[el.id.length-1]) {
           console.log('2');
-          if (squares[i].childElementCount !== 0){
+          if (squares[i].childElementCount !== 0) {
             console.log('3');
-          e.target.className += ' full';
+            e.target.className += ' full';
           }
         }
       }
@@ -65,5 +88,6 @@ window.addEventListener('DOMContentLoaded', () => {
     })
 
   }
-  playerTurn();
+      playerTurn();
+
 })
